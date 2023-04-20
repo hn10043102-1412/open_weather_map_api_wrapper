@@ -1,21 +1,22 @@
 import api
+import data
 
 
 def get_weather_data(city_name: str, use_api: str):
-    # エリアインスタンスを作成する
-    area = api.Area(city_name=city_name)
-
     # 天気を調査するための事前情報を獲得する
-    area.get_area_info()
+    area_geo_data = api.GeoCogingAPI.get_geo_data(city_name=city_name)
+
+    # エリアインスタンスを作成する
+    area = data.Area(city_name=city_name, geo_data=area_geo_data)
 
     # apiを制御する
     match use_api:
         case "onecall":
-            data = api.OneCallAPI.get_weather_data(area=area)
+            result = api.OneCallAPI.get_weather_data(area=area)
         case "current":
-            data = api.CurrentWeatherAPI.get_weather_data(area=area)
+            result = api.CurrentWeatherAPI.get_weather_data(area=area)
 
-    return data
+    return result
 
 
 def main():
