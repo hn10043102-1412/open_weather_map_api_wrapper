@@ -4,6 +4,8 @@ import core
 
 
 class GeoCogingAPI:
+    """地理情報API"""
+
     @classmethod
     def get_geo_data(self, city_name: str, state_code="", country_code="", limit=1):
         """名前から経度と緯度を取得する"""
@@ -21,6 +23,8 @@ class AbstractWeatherAPI:
 
 
 class OneCallAPI(AbstractWeatherAPI):
+    """1リクエストで多数の情報を取得するAPI"""
+
     @classmethod
     def get_weather_data(self, area: data.Area, exclude = None) -> data.WeatherData:
         lat = area.geo_data.lat
@@ -38,6 +42,8 @@ class OneCallAPI(AbstractWeatherAPI):
 
 
 class CurrentWeatherAPI(AbstractWeatherAPI):
+    """現在の天気情報を取得するAPI"""
+
     @classmethod
     def get_weather_data(self, area: data.Area):
         lat = area.geo_data.lat

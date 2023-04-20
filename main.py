@@ -3,6 +3,8 @@ import data
 
 
 def get_weather_data(city_name: str, use_api: str):
+    """引数を基に天気情報を取得する関数"""
+
     # 天気を調査するための事前情報を獲得する
     area_geo_data = api.GeoCogingAPI.get_geo_data(city_name=city_name)
 

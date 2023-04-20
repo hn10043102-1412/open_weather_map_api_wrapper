@@ -1,6 +1,6 @@
-
-
 class GeoData:
+    """地理情報データモデル"""
+
     def __init__(self, data: dict) -> None:
         self.data = data
         self.name = data.get("name")
@@ -46,6 +46,8 @@ class WeatherData:
 
 
 class CurrentWeatherData:
+    """現在の天気モデル"""
+
     def __init__(self, data: dict) -> None:
         self.data = data
         self.lat = data["coord"]["lat"]
