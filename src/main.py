@@ -1,38 +1,37 @@
-import api
+import api as open_weather_map_api
 import data
+from settings import OPEN_WEATHER_MAP_API_KEY
 
 
-def get_weather_data(city_name: str, use_api: str):
-    """
-    引数を基に天気情報を取得する関数
-    use_api: "onecall" or "current" or "3h5d"
-    """
+class WeatherDataGetter:
+    def __init__(self, city_name: str):
+        self.api = open_weather_map_api.OpenWeatherAPI(api_key=OPEN_WEATHER_MAP_API_KEY)
+        self.area_geo_data = self.api.get_geo_data(city_name=city_name)
+        self.area = data.Area(city_name=city_name, geo_data=self.area_geo_data)
 
-    # 天気を調査するための事前情報を獲得する
-    area_geo_data = api.GeoCogingAPI.get_geo_data(city_name=city_name)
-
-    # エリアインスタンスを作成する
-    area = data.Area(city_name=city_name, geo_data=area_geo_data)
-
-    # apiを制御する
-    match use_api:
-        case "onecall":
-            result = api.OneCallAPI.get_weather_data(area=area)
-        case "current":
-            result = api.CurrentWeatherAPI.get_weather_data(area=area)
-        case "3h5d":
-            result = api.Forecast3h5dWeatherAPI.get_weather_data(area=area)
-
-    return result
+    def get_weather_data(self, use_api: str):
+        """
+        引数を基に天気情報を取得する関数
+        use_api: "onecall" or "current" or "3h5d"
+        """
+        api_calls = {
+            "onecall": self.api.get_weather_data_by_onecall,
+            "current": self.api.get_current_weather_data,
+            "3h5d": self.api.get_forecast3h5d_weather_data,
+        }
+        try:
+            return api_calls[use_api](area=self.area)
+        except KeyError:
+            raise ValueError("Invalid value for use_api")
 
 
 def main():
     # 東京の現在の天気を取得
-    # current_tokyo_data = get_weather_data(city_name="tokyo", use_api="current")
-    # print(current_tokyo_data)
+    current_tokyo_data = WeatherDataGetter(city_name="tokyo").get_weather_data(use_api="current")
+    print(current_tokyo_data)
 
     # 東京の5日間で３時間ごとの天気を取得
-    forecast_3h5d_data = get_weather_data(city_name="tokyo", use_api="3h5d")
+    forecast_3h5d_data = WeatherDataGetter(city_name="tokyo").get_weather_data(use_api="3h5d")
     print(forecast_3h5d_data)
 
     forecast_3h5d_list = forecast_3h5d_data.get_three_hourly_weather_list()
