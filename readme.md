@@ -13,7 +13,7 @@ $ pip3 install requests python-dotenv
 # 動作検証
 1. OpenWeatherMapのサイトにてAPIキーを発行してください。
 2. フォルダ直下に`.env`ファイルを作成してください
-3. `OPEN_WEATHER_API_KEY`にAPIキーを定義してください。
+3. `OPEN_WEATHER_MAP_API_KEY`にAPIキーを定義してください。
 4. `main.py`を実行してください。
 
 # API reference

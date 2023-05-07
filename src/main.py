@@ -15,7 +15,7 @@ class WeatherDataGetter:
         use_api: "onecall" or "current" or "3h5d"
         """
         api_calls = {
-            "onecall": self.api.get_weather_data_by_onecall,
+            "onecall": self.api.get_weather_data,
             "current": self.api.get_current_weather_data,
             "3h5d": self.api.get_forecast3h5d_weather_data,
         }
@@ -26,12 +26,14 @@ class WeatherDataGetter:
 
 
 def main():
+    tokyo_weather_getter =  WeatherDataGetter(city_name="tokyo")
+
     # 東京の現在の天気を取得
-    current_tokyo_data = WeatherDataGetter(city_name="tokyo").get_weather_data(use_api="current")
+    current_tokyo_data =tokyo_weather_getter.get_weather_data(use_api="current")
     print(current_tokyo_data)
 
     # 東京の5日間で３時間ごとの天気を取得
-    forecast_3h5d_data = WeatherDataGetter(city_name="tokyo").get_weather_data(use_api="3h5d")
+    forecast_3h5d_data = tokyo_weather_getter.get_weather_data(use_api="3h5d")
     print(forecast_3h5d_data)
 
     forecast_3h5d_list = forecast_3h5d_data.get_three_hourly_weather_list()

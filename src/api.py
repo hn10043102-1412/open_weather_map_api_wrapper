@@ -3,7 +3,7 @@ from core import fetch
 
 
 class AbstractWeatherAPI:
-    def get_weather_data_by_onecall(self, area: data.Area) -> data.WeatherData:
+    def get_weather_data(self, area: data.Area) -> data.WeatherData:
         pass
 
 
@@ -21,7 +21,7 @@ class OpenWeatherAPI(AbstractWeatherAPI):
         fetch_data = response.json()
         return data.GeoData(fetch_data[0])
 
-    def get_weather_data_by_onecall(self, area: data.Area, exclude: list[str] = None) -> data.WeatherData:
+    def get_weather_data(self, area: data.Area, exclude: list[str] = None) -> data.WeatherData:
         lat = area.geo_data.lat
         lon = area.geo_data.lon
 
