@@ -4,6 +4,9 @@ from settings import OPEN_WEATHER_MAP_API_KEY
 
 
 class WeatherDataGetter:
+    """
+    天気情報を取得するクラス
+    """
     def __init__(self, city_name: str):
         self.api = open_weather_map_api.OpenWeatherAPI(api_key=OPEN_WEATHER_MAP_API_KEY)
         self.area_geo_data = self.api.get_geo_data(city_name=city_name)
@@ -36,6 +39,7 @@ def main():
     forecast_3h5d_data = tokyo_weather_getter.get_weather_data(use_api="3h5d")
     print(forecast_3h5d_data)
 
+    # 東京の5日間で３時間ごとの天気をリストで取得
     forecast_3h5d_list = forecast_3h5d_data.get_three_hourly_weather_list()
     print(forecast_3h5d_list)
 

@@ -1,4 +1,5 @@
 class HTTPRequestError(Exception):
+    """HTTPリクエストに関するエラー"""
     pass
 
 

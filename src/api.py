@@ -22,6 +22,7 @@ class OpenWeatherAPI(AbstractWeatherAPI):
         return data.GeoData(fetch_data[0])
 
     def get_weather_data(self, area: data.Area, exclude: list[str] = None) -> data.WeatherData:
+        """1回のリクエストでさまざまな情報を取得するAPI"""
         lat = area.geo_data.lat
         lon = area.geo_data.lon
 
@@ -48,6 +49,7 @@ class OpenWeatherAPI(AbstractWeatherAPI):
         return data.CurrentWeatherData(fetch_data)
 
     def get_forecast3h5d_weather_data(self, area: data.Area) -> data.Forecast3h5dWeatherData:
+        """5日間で3時間ごとの天気情報を取得するAPI"""
         lat = area.geo_data.lat
         lon = area.geo_data.lon
         url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={self.api_key}"
